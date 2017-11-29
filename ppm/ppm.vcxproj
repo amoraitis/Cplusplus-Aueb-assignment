@@ -150,8 +150,6 @@
     <ClCompile Include="ppm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="Image.h" />
     <ClInclude Include="ppm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

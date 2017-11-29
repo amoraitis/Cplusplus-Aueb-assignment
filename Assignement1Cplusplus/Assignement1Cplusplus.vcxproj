@@ -149,11 +149,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assignement1Cplusplus.cpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ppm\ppm.vcxproj">
       <Project>{498188d1-4107-48e9-ab0b-1c3655205239}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="Image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
