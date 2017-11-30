@@ -5,36 +5,54 @@ namespace imaging {
 
 	Color * imaging::Image::getRawDataPtr()
 	{
-		return nullptr;
+		return *&buffer;
 	}
 
 	Color imaging::Image::getPixel(unsigned int x, unsigned int y) const
 	{
-		return Color();
+		if (!(x >= 0 && x < width && y>0 && y <= height))return Color();
+		return buffer[(y-1)*width+x];
 	}
 
 	void imaging::Image::setPixel(unsigned int x, unsigned int y, Color & value)
 	{
+		if (!(x >= 0 && x < width && y>0 && y <= height))return;
+		buffer[(y - 1)*width + x] = value;
 	}
-
+	//TODO: the BIG mistake
 	void imaging::Image::setData(const Color *& data_ptr)
-	{
+	{		
+		for (int i=0; i < width*height; i++) {
+			buffer[i] = data_ptr[i];
+		}
 	}
 
 	Image::Image()
 	{
+		buffer = nullptr;
+		width = height = 0;
 	}
 
 	Image::Image(unsigned int width, unsigned int height)
 	{
+		this->width = width;
+		this->height = height;
+		buffer = nullptr;
+		
 	}
 
 	imaging::Image::Image(unsigned int width, unsigned int height, const Color * data_ptr)
 	{
+		this->width = width;
+		this->height = height;
+		setData(data_ptr);
 	}
 
 	imaging::Image::Image(const Image & src)
 	{
+		setData((src.getRawDataPtr));
+		this->width = src.getWidth();
+		this->height = src.getHeight();
 	}
 
 	imaging::Image::~Image()
@@ -43,7 +61,8 @@ namespace imaging {
 
 	Image & imaging::Image::operator=(const Image & right)
 	{
-		// TODO: insert return statement here
+		const Color * tmpBuffer = right.buffer;		
+		return Image(right.getWidth(), right.getHeight(),tmpBuffer);
 	}
 
 	bool imaging::Image::load(const std::string & filename, const std::string & format)
