@@ -6,21 +6,23 @@ namespace imaging {
 	//TODO: check for errors
 	Color * imaging::Image::getRawDataPtr()
 	{
-		return *&buffer;
+		return buffer;
 	}
 
 	//TODO: check for errors
 	Color imaging::Image::getPixel(unsigned int x, unsigned int y) const
 	{
-		if (!(x >= 0 && x < width && y>0 && y <= height))return Color();
-		return buffer[(y-1)*width+x];
+		if (!(x >= 0 && x < width && y>=0 && y < height))return Color();
+		int position =  x*width + y;
+		return *(buffer + position);
 	}
 
 	//TODO: check for errors
 	void imaging::Image::setPixel(unsigned int x, unsigned int y, Color & value)
 	{
-		if (!(x >= 0 && x < width && y>0 && y <= height))return;
-		buffer[(y - 1)*width + x] = value;
+		if (!(x >= 0 && x < width && y>=0 && y < height))return;
+		int position = x*width + y;
+		* (buffer + position)= value;
 	}
 
 	//TODO: the BIG mistake
@@ -30,7 +32,7 @@ namespace imaging {
 			buffer[i] = data_ptr[i];
 		}
 	}
-
+#pragma region Constructors
 	//Done
 	Image::Image()
 	{
@@ -69,11 +71,13 @@ namespace imaging {
 	//Done
 	imaging::Image::~Image()
 	{
+		delete[] buffer;
 	}
+#pragma endregion
 
 	//TODO: check for errors
 	Image & imaging::Image::operator=(const Image & right)
-	{
+	{//anathesi topikwn metablitwn apo arguments
 		return Image(right.getWidth(), right.getHeight(),right.buffer);
 	}
 
@@ -81,18 +85,21 @@ namespace imaging {
 	bool imaging::Image::load(const std::string & filename, const std::string & format)
 	{
 		if (format != "ppm")return false;
-		int w = (int)width;
-		int h = (int)height;
-		int multiply = w*h;
-		buffer = new Color[w*h];			
-		std::string file = filename;
+		int w = width;
+		int h = height;
+		
+				
+		std::string file = filename+"."+format;
 		float * image = ReadPPM(file.c_str(), &w, &h);
+		buffer = new Color[w*h];
+		int multiply = w*h;
 		for (int i = 0; i <multiply*3; i += 3) {
 			Color tmp(image[i], image[i + 1], image[i + 2]);
-			buffer[i] = tmp;
+			setPixel( i/3/w, i/3%w, tmp);
+			//buffer[i] = tmp;
 		}
-		width = w;
-		height = h;
+		width = (unsigned int) w;
+		height = (unsigned int) h;
 		delete image;
 		return true;
 	}
@@ -101,16 +108,17 @@ namespace imaging {
 	bool imaging::Image::save(const std::string & filename, const std::string & format)
 	{
 		if (format != "ppm")return false;
-		int w = (int)width;
-		int h = (int)height;
+		int w = width;
+		int h = height;
 		const int multiply = w*h*3;		
 		std::string file = filename + "." + format;
 		float * data = new float[multiply];
-		for (int i = 0; i <multiply * 3; i += 3) {
-			
-			data[i] = buffer[i][0];
-			data[i + 1] = buffer[i][1];
-			data[i + 2] = buffer[i][2];
+		for (int i = 0; i <multiply; i += 3) {
+			Color tmp = getPixel(i/3/width,i/3%width);
+
+			data[i] = tmp.r;
+			data[i + 1] =tmp.g;
+			data[i + 2] = tmp.b;
 		}
 		bool written = WritePPM(data,w,h,file.c_str());
 		delete data;
