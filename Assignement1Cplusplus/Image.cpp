@@ -14,7 +14,8 @@ namespace imaging {
 	{
 		if (!(x >= 0 && x < width && y>=0 && y < height))return Color();
 		int position =  x*width + y;
-		return *(buffer + position);
+		Color tmp = buffer[position];
+		return tmp;
 	}
 
 	//TODO: check for errors
@@ -22,7 +23,7 @@ namespace imaging {
 	{
 		if (!(x >= 0 && x < width && y>=0 && y < height))return;
 		int position = x*width + y;
-		* (buffer + position)= value;
+		buffer[position]= value;
 	}
 
 	//TODO: the BIG mistake
@@ -91,13 +92,17 @@ namespace imaging {
 				
 		std::string file = filename+"."+format;
 		float * image = ReadPPM(file.c_str(), &w, &h);
-		buffer = new Color[w*h];
+		Color * curentColors = new Color[w*h];
 		int multiply = w*h;
+		Color tmp;
 		for (int i = 0; i <multiply*3; i += 3) {
-			Color tmp(image[i], image[i + 1], image[i + 2]);
-			setPixel( i/3/w, i/3%w, tmp);
-			//buffer[i] = tmp;
+			(tmp).r = image[i];
+			(tmp).g = image[i + 1];
+			(tmp).b = image[i + 2];
+			//setPixel( i/3/w, i/3%w,* tmp);
+			curentColors[i/3] = tmp;
 		}
+		buffer = curentColors;
 		width = (unsigned int) w;
 		height = (unsigned int) h;
 		delete image;
@@ -114,7 +119,10 @@ namespace imaging {
 		std::string file = filename + "." + format;
 		float * data = new float[multiply];
 		for (int i = 0; i <multiply; i += 3) {
-			Color tmp = getPixel(i/3/width,i/3%width);
+			Color tmp;
+			tmp.r = buffer[i/3].r;
+			tmp.g = buffer[i/3].g;
+			tmp.b = buffer[i / 3].b;
 
 			data[i] = tmp.r;
 			data[i + 1] =tmp.g;
