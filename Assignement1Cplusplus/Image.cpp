@@ -1,8 +1,6 @@
 #include "Image.h"
 #include "ppm.h"
-#include <iostream>
 using namespace imaging;
-using namespace std;
 namespace imaging {
 
 	//TODO: check for errors
@@ -15,7 +13,7 @@ namespace imaging {
 	Color imaging::Image::getPixel(unsigned int x, unsigned int y) const
 	{
 		if (!(x >= 0 && x < width && y>=0 && y < height))return Color();
-		int position =  x*width + y;
+		int position =  y*width + x;
 		Color tmp = buffer[position];
 		return tmp;
 	}
@@ -24,8 +22,7 @@ namespace imaging {
 	void imaging::Image::setPixel(unsigned int x, unsigned int y, Color & value)
 	{
 		if (!(x >= 0 && x < width && y>=0 && y < height))return;
-		int position = x*width + y;
-		cout << position << std::endl;
+		int position = y*width + x;
 		buffer[position]= value;
 	}
 
