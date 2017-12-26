@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Array.cpp" />
     <ClCompile Include="Assignement1Cplusplus.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -158,6 +159,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Array.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Image.h" />
   </ItemGroup>
