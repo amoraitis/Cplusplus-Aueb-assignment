@@ -3,13 +3,13 @@
 using namespace imaging;
 namespace imaging {
 
-	//TODO: check for errors
+	//DONE
 	Color * imaging::Image::getRawDataPtr()
 	{
 		return buffer;
 	}
 
-	//TODO: check for errors
+	//DONE
 	Color imaging::Image::getPixel(unsigned int x, unsigned int y) const
 	{
 		if (!(x >= 0 && x < width && y>=0 && y < height))return Color();
@@ -18,7 +18,7 @@ namespace imaging {
 		return tmp;
 	}
 
-	//TODO: check for errors
+	//Done
 	void imaging::Image::setPixel(unsigned int x, unsigned int y, Color & value)
 	{
 		if (!(x >= 0 && x < width && y>=0 && y < height))return;
@@ -26,7 +26,7 @@ namespace imaging {
 		buffer[position]= value;
 	}
 
-	//TODO: the BIG mistake
+	//Done
 	void imaging::Image::setData(const Color *& data_ptr)
 	{		
 		for (int i=0; i < width*height; i++) {
@@ -37,16 +37,16 @@ namespace imaging {
 	//Done
 	Image::Image()
 	{
-		buffer = nullptr;
+		buffer = new Color[0];
 		width = height = 0;
 	}
 
-	//TODO: check for errors
+	//DONE
 	Image::Image(unsigned int width, unsigned int height)
 	{
 		this->width = width;
 		this->height = height;
-		buffer = nullptr;
+		buffer = new Color[width*height];
 		
 	}
 
@@ -55,31 +55,32 @@ namespace imaging {
 	{
 		this->width = width;
 		this->height = height;
+		buffer = new Color[width*height];
 		setData(data_ptr);
 	}
 
-	//Done
+	//DONE
 	imaging::Image::Image(const Image & src)
 	{
-		Image* temp = (Image *)&src;
-		
-		Color *& tmp =(Color *&) (*temp->getRawDataPtr());
-		this->setData((const Color *&)tmp);
-		this->width = src.getWidth();
-		this->height = src.getHeight();
+		width = src.getWidth();
+		height = src.getHeight();
+		buffer = src.buffer;
 	}
 
 	//Done
 	imaging::Image::~Image()
 	{
-		delete[] buffer;
+		//delete[] buffer;
 	}
 #pragma endregion
 
-	//TODO: check for errors
-	Image & imaging::Image::operator=(const Image & right)
-	{//anathesi topikwn metablitwn apo arguments
-		return Image(right.getWidth(), right.getHeight(),right.buffer);
+	//DONE
+	imaging::Image & imaging::Image::operator=(const Image & right)
+	{
+		width = right.getWidth();
+		height = right.getHeight();
+		buffer = right.buffer;
+		return *this;
 	}
 
 	//Done
@@ -129,7 +130,7 @@ namespace imaging {
 			data[i + 2] = tmp.b;
 		}
 		bool written = WritePPM(data,w,h,file.c_str());
-		delete data;
+		
 		return true;
 	}
 }

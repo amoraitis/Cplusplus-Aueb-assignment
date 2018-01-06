@@ -150,7 +150,8 @@
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="Assignement1Cplusplus.cpp" />
-    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="FilterGamma.cpp" />
+    <ClCompile Include="FilterLinear.cpp" />
     <ClCompile Include="Image.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,8 +161,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
-    <ClInclude Include="Color.h" />
+    <ClInclude Include="Filter.h" />
+    <ClInclude Include="FilterGamma.h" />
+    <ClInclude Include="FilterLinear.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

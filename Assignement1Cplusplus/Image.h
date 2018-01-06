@@ -9,14 +9,16 @@
 #ifndef _IMAGE
 #define _IMAGE
 
-#include "Color.h"
+#include "Array.h"
 #include <string>
+#include "Vec3.h"
 
+using namespace math;
 /*! The imaging namespace contains every class or function associated with the image storage, compression and manipulation. 
  */ 
 namespace imaging
 {
-
+#define Color Vec3<float>
 //------------------------------------ class Image ------------------------------------------------
 
 	/*! It is the class that represents a generic data container for an image.
@@ -32,7 +34,7 @@ namespace imaging
 	 * All values stored in the Color data type components are assumed to be floating point values and for typical (normalized)
 	 * intensity ranges, each color component is within the range [0.0, 1.0].
 	 */ 
-	class Image
+	class Image : public Array<Vec3<float>>
 	{
 	public:
 		                                             

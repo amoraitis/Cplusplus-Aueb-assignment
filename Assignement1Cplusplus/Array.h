@@ -1,5 +1,6 @@
 
 #ifndef _ARRAY
+
 #define _ARRAY
 #include <iostream>
 #include <math.h>
@@ -9,10 +10,11 @@ using namespace std;
 namespace imaging {
 
 	//template<typename T>;
-	template<class T> class Array : Array<T>
+	template<class T> 
+	class Array
 	{
 	protected:
-		std::vector<T> * buffer;                              //! Holds the image data.
+		vector<T> * buffer;                              //! Holds the image data.
 
 		unsigned int width, 						 //! The width of the image (in pixels)
 			height;		                 //! The height of the image (in pixels)
@@ -72,7 +74,10 @@ namespace imaging {
 
 		// constructors and destructor
 
-		Array();
+		Array() {
+			buffer = new vector<T>[0];
+			width = height = 0;
+		}
 		
 		/*! Constructor with width and height specification.
 		*
@@ -95,9 +100,11 @@ namespace imaging {
 		*
 		* \param src is the source image to replicate in this object.
 		*/
-		Array(const Array &src);
+		Array(const Array<T> &src);
 
-		~Array();
+		~Array() {
+			delete[] buffer;
+		}
 
 		/*! Copy assignment operator.
 		*
@@ -106,7 +113,7 @@ namespace imaging {
 		*
 		* \param right is the source image.
 		*/
-		Array & operator = (const Array & right);
+		Array<T> & operator = (const Array<T> & right);
 
 		T & operator () (int i, int j);
 	};
