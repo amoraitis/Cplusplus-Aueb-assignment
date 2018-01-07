@@ -17,9 +17,10 @@ namespace  imaging {
 			int w = (i) % (result.getWidth());
 			int h = (i) / result.getWidth();
 			Color currentColor;
-			currentColor.r = result.getPixel(w, h).r;
-			currentColor.g = result.getPixel(w, h).g;
-			currentColor.b = result.getPixel(w, h).b;
+			currentColor.r = pow(result.getPixel(w, h).r, getY().r);
+			currentColor.g = pow(result.getPixel(w, h).g, getY().g);
+			currentColor.b = pow(result.getPixel(w, h).b, getY().b);
+			result.setPixel(w, h, currentColor);
 		}
 		return result;
 	}
