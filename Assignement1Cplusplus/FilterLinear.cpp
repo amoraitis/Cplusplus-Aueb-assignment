@@ -18,9 +18,9 @@ namespace imaging {
 		for (int i = 0; i < size; i++) {
 			int w = (i) % (result.getWidth());
 			int h = (i) / result.getWidth();
-			Color currentColor = result.getPixel(w,h);
+			Color currentColor = image.getPixel(w,h);
 			currentColor *= getA();
-			currentColor += getC();
+			currentColor += getC()*255;
 			currentColor=currentColor.clampToLowerBound(0);
 			currentColor=currentColor.clampToUpperBound(255);
 			result.setPixel(w,h,currentColor);

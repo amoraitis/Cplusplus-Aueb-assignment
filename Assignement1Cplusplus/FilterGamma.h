@@ -4,17 +4,15 @@ namespace imaging {
 	class FilterGamma : public Filter
 	{
 	private:
-		Vec3<float> y;
-		bool checkBounds(float a) {
-			return a >= 0.5 && a <= 2;
-		}
+		float y;
+
 	public:
-		Vec3<float> getY() {
+		float getY() {
 			return y;
 		}
-		bool setY(float x, float y, float z) {
-			if (checkBounds(x) && checkBounds(y) && checkBounds(z)) {
-				this->y = Vec3<float>(x,y,z);
+		bool setY(float y) {
+			if (y >= 0.5 && y <= 2.0) {
+				this->y = y;
 				return true;
 			}
 			else {

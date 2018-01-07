@@ -70,7 +70,7 @@ namespace imaging {
 	//Done
 	imaging::Image::~Image()
 	{
-		delete[] buffer;
+		//delete buffer;
 	}
 #pragma endregion
 
