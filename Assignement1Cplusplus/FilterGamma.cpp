@@ -21,7 +21,7 @@ namespace  imaging {
 			currentColor.g = pow(result.getPixel(w, h).g, getY());
 			currentColor.b = pow(result.getPixel(w, h).b, getY());
 			currentColor = currentColor.clampToLowerBound(0);
-			currentColor = currentColor.clampToUpperBound(255);
+			currentColor = currentColor.clampToUpperBound(1);
 			result.setPixel(w, h, currentColor);
 		}
 		return result;

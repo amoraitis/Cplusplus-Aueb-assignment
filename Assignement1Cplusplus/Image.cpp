@@ -101,9 +101,9 @@ namespace imaging {
 		int multiply = w*h;
 		Color tmp;
 		for (int i = 0; i <multiply*3; i += 3) {
-			(tmp).r = image[i];
-			(tmp).g = image[i + 1];
-			(tmp).b = image[i + 2];
+			(tmp).r = image[i]/255;
+			(tmp).g = image[i + 1]/255;
+			(tmp).b = image[i + 2]/255;
 			//setPixel( i/3/w, i/3%w,* tmp);
 			buffer[i/3] = tmp;
 		}
@@ -125,9 +125,9 @@ namespace imaging {
 		float * data = new float[multiply];
 		for (int i = 0; i <multiply; i += 3) {
 			Color tmp;
-			tmp.r = buffer[i/3].r;
-			tmp.g = buffer[i/3].g;
-			tmp.b = buffer[i / 3].b;
+			tmp.r = buffer[i/3].r*255;
+			tmp.g = buffer[i/3].g*255;
+			tmp.b = buffer[i / 3].b*255;
 
 			data[i] = tmp.r;
 			data[i + 1] =tmp.g;
