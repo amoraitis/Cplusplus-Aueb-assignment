@@ -37,7 +37,7 @@ namespace imaging {
 	//Done
 	Image::Image()
 	{
-		buffer = new Color[0];
+		buffer = nullptr;
 		width = height = 0;
 	}
 
@@ -79,7 +79,11 @@ namespace imaging {
 	{
 		width = right.getWidth();
 		height = right.getHeight();
-		buffer = right.buffer;
+		int size = width*height;		
+		buffer = new Vec3<float>[size];
+		for (int i = 0; i < size; i++) {
+			buffer[i] = Color(right.buffer[i]);
+		}
 		return *this;
 	}
 
@@ -93,7 +97,7 @@ namespace imaging {
 				
 		std::string file = filename+"."+format;
 		float * image = ReadPPM(file.c_str(), &w, &h);
-		Color * curentColors = new Color[w*h];
+		buffer = new Color[w*h];
 		int multiply = w*h;
 		Color tmp;
 		for (int i = 0; i <multiply*3; i += 3) {
@@ -101,9 +105,9 @@ namespace imaging {
 			(tmp).g = image[i + 1];
 			(tmp).b = image[i + 2];
 			//setPixel( i/3/w, i/3%w,* tmp);
-			curentColors[i/3] = tmp;
+			buffer[i/3] = tmp;
 		}
-		buffer = curentColors;
+		
 		width = (unsigned int) w;
 		height = (unsigned int) h;
 		delete image;
